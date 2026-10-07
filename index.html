@@ -19,10 +19,7 @@
             --success-container: #D1E7DD;
         }
 
-        * {
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -37,307 +34,97 @@
             overflow-x: hidden;
         }
 
-        h2 { 
-            margin: 4px 0 10px 0; 
-            color: var(--primary); 
-            text-align: center; 
-            font-size: 18px; 
-        }
+        h2 { margin: 4px 0 10px 0; color: var(--primary); text-align: center; font-size: 16px; }
 
         .categories-wrapper {
-            display: flex;
-            align-items: center;
-            width: 100%;
-            max-width: 480px;
-            margin-bottom: 12px;
-            position: relative;
+            display: flex; align-items: center; width: 100%; max-width: 480px; margin-bottom: 12px; position: relative;
         }
 
         .categories {
-            display: flex;
-            gap: 6px;
-            overflow-x: auto;
-            scroll-behavior: smooth;
-            width: 100%;
-            padding-bottom: 2px;
-            scrollbar-width: none;
-            -webkit-overflow-scrolling: touch;
+            display: flex; gap: 6px; overflow-x: auto; scroll-behavior: smooth; width: 100%; padding-bottom: 2px; scrollbar-width: none; -webkit-overflow-scrolling: touch;
         }
         .categories::-webkit-scrollbar { display: none; }
 
         .chip {
-            background: var(--surface);
-            border: 1px solid var(--outline);
-            padding: 6px 14px;
-            border-radius: 18px;
-            cursor: pointer;
-            white-space: nowrap;
-            font-size: 13px;
-            font-weight: 500;
-            flex-shrink: 0;
+            background: var(--surface); border: 1px solid var(--outline); padding: 6px 14px; border-radius: 18px; cursor: pointer; white-space: nowrap; font-size: 13px; font-weight: 500; flex-shrink: 0;
         }
-
-        .chip.active {
-            background: var(--primary-container);
-            color: var(--on-primary-container);
-            border-color: transparent;
-            font-weight: bold;
-        }
+        .chip.active { background: var(--primary-container); color: var(--on-primary-container); border-color: transparent; font-weight: bold; }
 
         .scroll-arrow {
-            background: var(--surface);
-            border: 1px solid var(--outline);
-            border-radius: 50%;
-            width: 26px;
-            height: 26px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 11px;
-            flex-shrink: 0;
-            margin: 0 2px;
-            z-index: 2;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            background: var(--surface); border: 1px solid var(--outline); border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 11px; flex-shrink: 0; margin: 0 2px; z-index: 2; box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
-        #app-content {
-            width: 100%;
-            max-width: 480px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            flex: 1;
-        }
+        #app-content { width: 100%; max-width: 480px; display: flex; flex-direction: column; align-items: center; flex: 1; }
 
         .card {
-            background: var(--surface);
-            width: 100%;
-            border-radius: 20px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 16px;
-            position: relative;
-            margin-bottom: 12px;
+            background: var(--surface); width: 100%; border-radius: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 16px; position: relative; margin-bottom: 12px;
         }
 
         .card-emoji-box {
-            font-size: 64px;
-            margin-bottom: 10px;
-            background: #f8f5ff;
-            width: 88px;
-            height: 88px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            box-shadow: inset 0 2px 6px rgba(0,0,0,0.04);
+            font-size: 64px; margin-bottom: 10px; background: #f8f5ff; width: 88px; height: 88px; display: flex; align-items: center; justify-content: center; border-radius: 50%; box-shadow: inset 0 2px 6px rgba(0,0,0,0.04);
         }
 
         .card-ro { font-size: 24px; font-weight: bold; color: var(--primary); margin-bottom: 4px; }
         .card-ru { font-size: 16px; color: var(--on-surface); opacity: 0.85; }
         
         .btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            width: 100%;
-            max-width: 480px;
-            padding: 13px;
-            border-radius: 14px;
-            font-size: 15px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-bottom: 8px;
-            text-align: center;
-            transition: background-color 0.2s;
+            background: var(--primary); color: white; border: none; width: 100%; max-width: 480px; padding: 13px; border-radius: 14px; font-size: 15px; font-weight: bold; cursor: pointer; margin-bottom: 8px; text-align: center; transition: background-color 0.2s;
         }
+        .btn-outline { background: var(--surface); border: 1px solid var(--outline); color: var(--on-surface); }
+        .btn.correct { background-color: var(--success) !important; color: white !important; border-color: var(--success) !important; }
+        .btn.incorrect { background-color: var(--error) !important; color: white !important; border-color: var(--error) !important; }
 
-        .btn-outline {
-            background: var(--surface);
-            border: 1px solid var(--outline);
-            color: var(--on-surface);
-        }
-
-        .btn.correct {
-            background-color: var(--success) !important;
-            color: white !important;
-            border-color: var(--success) !important;
-        }
-
-        .btn.incorrect {
-            background-color: var(--error) !important;
-            color: white !important;
-            border-color: var(--error) !important;
-        }
-
-        .options-container {
-            width: 100%;
-            max-width: 480px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-bottom: 12px;
-        }
-
-        .grid-options {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            width: 100%;
-            max-width: 480px;
-            margin-bottom: 12px;
-        }
+        .options-container { width: 100%; max-width: 480px; display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
+        .grid-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; max-width: 480px; margin-bottom: 12px; }
 
         .grid-btn {
-            background: var(--surface);
-            border: 2px solid var(--outline);
-            border-radius: 16px;
-            padding: 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: bold;
-            text-align: center;
+            background: var(--surface); border: 2px solid var(--outline); border-radius: 16px; padding: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; font-size: 13px; font-weight: bold; text-align: center;
         }
-
-        .grid-emoji {
-            font-size: 38px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 4px;
-        }
+        .grid-emoji { font-size: 38px; height: 50px; display: flex; align-items: center; justify-content: center; margin-bottom: 4px; }
 
         input[type="text"] {
-            width: 100%;
-            max-width: 480px;
-            padding: 13px;
-            border: 1px solid var(--outline);
-            border-radius: 12px;
-            font-size: 16px;
-            margin-bottom: 10px;
-            outline: none;
-            background: var(--surface);
-            color: var(--on-surface);
+            width: 100%; max-width: 480px; padding: 13px; border: 1px solid var(--outline); border-radius: 12px; font-size: 16px; margin-bottom: 10px; outline: none; background: var(--surface); color: var(--on-surface);
         }
+        input[type="text"].error-input { border-color: var(--error); background-color: var(--error-container); }
 
-        input[type="text"].error-input {
-            border-color: var(--error);
-            background-color: var(--error-container);
-        }
-
-        /* Нижняя панель навигации под мобильные устройства */
         .nav-tabs {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: var(--surface);
-            border-top: 1px solid #E0E0E0;
-            display: flex;
-            justify-content: space-around;
-            padding: 8px 6px calc(8px + env(safe-area-inset-bottom)) 6px;
-            box-shadow: 0 -4px 10px rgba(0,0,0,0.05);
-            z-index: 100;
+            position: fixed; bottom: 0; left: 0; right: 0; background: var(--surface); border-top: 1px solid #E0E0E0; display: flex; justify-content: space-around; padding: 8px 4px calc(8px + env(safe-area-inset-bottom)) 4px; box-shadow: 0 -4px 10px rgba(0,0,0,0.05); z-index: 100;
         }
-
         .nav-btn {
-            flex: 1;
-            padding: 8px 2px;
-            border-radius: 10px;
-            border: none;
-            background: transparent;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 10px;
-            white-space: nowrap;
-            color: var(--outline);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 2px;
-            transition: all 0.2s;
+            flex: 1; padding: 8px 1px; border-radius: 8px; border: none; background: transparent; cursor: pointer; font-weight: 600; font-size: 9px; white-space: nowrap; color: var(--outline); display: flex; flex-direction: column; align-items: center; gap: 2px; transition: all 0.2s;
         }
+        .nav-btn.active { background: var(--primary-container); color: var(--on-primary-container); font-weight: bold; }
 
-        .nav-btn.active {
-            background: var(--primary-container);
-            color: var(--on-primary-container);
-            font-weight: bold;
-        }
-
-        .audio-btn {
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-            color: var(--primary);
-            margin-top: 2px;
-            padding: 4px;
-        }
-        
-        .message-box {
-            font-size: 14px;
-            margin-bottom: 10px;
-            text-align: center;
-            font-weight: bold;
-        }
+        .audio-btn { background: none; border: none; cursor: pointer; font-size: 16px; color: var(--primary); margin-top: 2px; padding: 4px; }
+        .message-box { font-size: 14px; margin-bottom: 10px; text-align: center; font-weight: bold; }
         .error-msg { color: var(--error); }
 
-        /* Стили таблиц грамматики под моб. экраны */
-        .grammar-container {
-            width: 100%;
-            max-width: 480px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            padding-bottom: 10px;
+        .grammar-container { width: 100%; max-width: 480px; display: flex; flex-direction: column; gap: 12px; padding-bottom: 10px; }
+        .grammar-card { background: var(--surface); border-radius: 18px; padding: 14px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .grammar-card h3 { margin: 0 0 8px 0; font-size: 15px; color: var(--primary); border-bottom: 2px solid var(--primary-container); padding-bottom: 4px; }
+        .grammar-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+        .grammar-table th, .grammar-table td { border: 1px solid #E0E0E0; padding: 6px; text-align: left; }
+        .grammar-table th { background: #F4EEF8; color: var(--on-surface); }
+        .rule-note { font-size: 11px; color: #555; margin-top: 6px; background: #fdfcff; padding: 6px; border-radius: 8px; border-left: 3px solid var(--primary); }
+
+        .clickable-word { cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; transition: opacity 0.2s; }
+        .clickable-word:active { opacity: 0.6; }
+
+        /* Стили для Пазла предложений */
+        .puzzle-box { width: 100%; max-width: 480px; display: flex; flex-direction: column; gap: 10px; align-items: center; }
+        .puzzle-target-area {
+            background: var(--surface); border: 2px dashed var(--outline); min-height: 70px; width: 100%; border-radius: 16px; padding: 10px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: center;
         }
-        .grammar-card {
-            background: var(--surface);
-            border-radius: 18px;
-            padding: 14px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        .puzzle-source-area {
+            background: #f8f5ff; border: 1px solid var(--primary-container); min-height: 80px; width: 100%; border-radius: 16px; padding: 10px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: center;
         }
-        .grammar-card h3 {
-            margin: 0 0 8px 0;
-            font-size: 15px;
-            color: var(--primary);
-            border-bottom: 2px solid var(--primary-container);
-            padding-bottom: 4px;
+        .puzzle-chip {
+            background: var(--surface); border: 1px solid var(--primary); color: var(--primary); padding: 8px 12px; border-radius: 12px; font-weight: bold; font-size: 14px; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.05); transition: transform 0.1s;
         }
-        .grammar-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 12px;
-        }
-        .grammar-table th, .grammar-table td {
-            border: 1px solid #E0E0E0;
-            padding: 6px;
-            text-align: left;
-        }
-        .grammar-table th {
-            background: #F4EEF8;
-            color: var(--on-surface);
-        }
-        .rule-note {
-            font-size: 11px;
-            color: #555;
-            margin-top: 6px;
-            background: #fdfcff;
-            padding: 6px;
-            border-radius: 8px;
-            border-left: 3px solid var(--primary);
-        }
+        .puzzle-chip:active { transform: scale(0.95); }
     </style>
+    <!-- Подключаем внешнюю базу данных -->
+    <script src="database.js"></script>
 </head>
 <body>
 
@@ -350,15 +137,14 @@
     </div>
 
     <div id="app-content"></div>
-
     <div class="nav-tabs" id="nav-tabs-container"></div>
-
-<script src="database.js"></script>
 
 <script>
     let currentMode = 'flashcards';
     let selectedCategory = 'Все';
     let currentWord = null;
+    let wordQueue = [];
+    const SESSION_SIZE = 20; 
     
     let quizOptions = [];
     let quizAnswered = false;
@@ -379,32 +165,44 @@
     let verbTaskOptions = [];
     let verbAnswered = false;
 
-    function getFilteredWords() {
-        return selectedCategory === 'Все' ? words : words.filter(w => w.cat === selectedCategory);
+    // Переменные для Пазла предложений
+    let currentSentenceIndex = 0;
+    let puzzleSourceWords = [];
+    let puzzleTargetWords = [];
+    let puzzleStatus = null; 
+
+    function initQueue() {
+        let list = selectedCategory === 'Все' ? words : words.filter(w => w.cat === selectedCategory);
+        let shuffled = [...list].sort(() => 0.5 - Math.random());
+        wordQueue = shuffled.slice(0, Math.min(SESSION_SIZE, shuffled.length));
     }
 
-    function getRandomWord() {
-        const list = getFilteredWords();
-        let nextWord;
-        do {
-            nextWord = list[Math.floor(Math.random() * list.length)];
-        } while (list.length > 1 && nextWord === currentWord);
-        return nextWord;
+    function getNextWord() {
+        if (wordQueue.length === 0) {
+            initQueue();
+        }
+        return wordQueue.pop();
+    }
+
+    function requeueCurrentWord() {
+        if (currentWord) {
+            wordQueue.unshift(currentWord);
+        }
     }
 
     function scrollCategories(offset) {
         document.getElementById('categories-container').scrollBy({ left: offset, behavior: 'smooth' });
     }
 
-    function speak(text) {
+    function speak(text, lang = 'ro') {
         try {
-            const audioUrl = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(text)}&tl=ro&client=tw-ob`;
+            const audioUrl = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(text)}&tl=${lang}&client=tw-ob`;
             const audio = new Audio(audioUrl);
             audio.play().catch(() => {
                 if ('speechSynthesis' in window) {
                     window.speechSynthesis.cancel();
                     const utterance = new SpeechSynthesisUtterance(text);
-                    utterance.lang = 'ro-RO';
+                    utterance.lang = lang === 'ro' ? 'ro-RO' : 'ru-RU';
                     window.speechSynthesis.speak(utterance);
                 }
             });
@@ -416,19 +214,81 @@
     function setMode(mode) {
         currentMode = mode;
         verbQuizActive = false;
+        if (mode === 'sentences') {
+            initPuzzleSentence();
+        }
         resetState();
         render();
-        if (mode === 'audio') {
-            setTimeout(() => speak(currentWord.ro), 300);
-        }
     }
 
     function selectCategory(cat) {
         selectedCategory = cat;
+        initQueue(); 
         resetState();
         render();
-        if (currentMode === 'audio') {
-            setTimeout(() => speak(currentWord.ro), 300);
+    }
+
+    function initPuzzleSentence() {
+        currentSentenceIndex = Math.floor(Math.random() * userSentences.length);
+        setupPuzzleData();
+    }
+
+    function setupPuzzleData() {
+        puzzleStatus = null;
+        puzzleTargetWords = [];
+        let sentenceObj = userSentences[currentSentenceIndex];
+        let cleanRo = sentenceObj.ro.replace(/[,.]/g, '');
+        let wordsArr = cleanRo.split(/\s+/);
+        puzzleSourceWords = wordsArr.map((word, idx) => ({ id: idx, text: word })).sort(() => 0.5 - Math.random());
+        render();
+    }
+
+    function selectPuzzleWord(id) {
+        if (puzzleStatus === 'correct' || puzzleStatus === 'incorrect') return;
+        let index = puzzleSourceWords.findIndex(w => w.id === id);
+        if (index !== -1) {
+            let item = puzzleSourceWords.splice(index, 1)[0];
+            puzzleTargetWords.push(item);
+            puzzleStatus = null;
+            render();
+        }
+    }
+
+    function deselectPuzzleWord(id) {
+        if (puzzleStatus === 'correct' || puzzleStatus === 'incorrect') return;
+        let index = puzzleTargetWords.findIndex(w => w.id === id);
+        if (index !== -1) {
+            let item = puzzleTargetWords.splice(index, 1)[0];
+            puzzleSourceWords.push(item);
+            puzzleStatus = null;
+            render();
+        }
+    }
+
+    function checkPuzzleResult() {
+        if (puzzleStatus === 'incorrect' || puzzleStatus === 'correct') return;
+
+        let sentenceObj = userSentences[currentSentenceIndex];
+        let cleanRo = sentenceObj.ro.replace(/[,.]/g, '');
+        let originalWords = cleanRo.split(/\s+/);
+
+        let userString = puzzleTargetWords.map(w => w.text).join(' ');
+        if (userString === originalWords.join(' ')) {
+            puzzleStatus = 'correct';
+            speak(sentenceObj.ro, 'ro');
+            render();
+            setTimeout(() => {
+                initPuzzleSentence();
+            }, 1600);
+        } else {
+            puzzleStatus = 'incorrect';
+            // Сразу подсвечиваем ошибку и выставляем правильный порядок слов вверху
+            puzzleTargetWords = originalWords.map((w, idx) => ({ id: 100 + idx, text: w }));
+            puzzleSourceWords = [];
+            render();
+            setTimeout(() => {
+                initPuzzleSentence();
+            }, 2500);
         }
     }
 
@@ -441,11 +301,22 @@
         imageAnswered = false;
         audioAnswered = false;
         verbAnswered = false;
-        if (currentMode !== 'grammar') {
-            currentWord = getRandomWord();
+        
+        if (currentMode !== 'grammar' && currentMode !== 'sentences') {
+            currentWord = getNextWord();
             prepareQuizOptions();
             prepareImageOptions();
             prepareAudioOptions();
+            
+            setTimeout(() => {
+                if (currentWord) {
+                    if (currentMode === 'typing') {
+                        speak(currentWord.ru, 'ru'); 
+                    } else {
+                        speak(currentWord.ro, 'ro'); 
+                    }
+                }
+            }, 300);
         } else if (verbQuizActive) {
             prepareVerbTask();
         }
@@ -475,6 +346,8 @@
             }
         });
 
+        speak(currentVerbTask.form, 'ro');
+
         setTimeout(() => {
             verbAnswered = false;
             prepareVerbTask();
@@ -482,20 +355,24 @@
         }, 1200);
     }
 
+    function getFilteredWordsForOptions() {
+        return selectedCategory === 'Все' ? words : words.filter(w => w.cat === selectedCategory);
+    }
+
     function prepareQuizOptions() {
-        const filtered = getFilteredWords();
+        const filtered = getFilteredWordsForOptions();
         const wrongs = filtered.filter(w => w !== currentWord).sort(() => 0.5 - Math.random()).slice(0, 3);
         quizOptions = [...wrongs, currentWord].sort(() => 0.5 - Math.random());
     }
 
     function prepareImageOptions() {
-        const filtered = getFilteredWords();
+        const filtered = getFilteredWordsForOptions();
         const wrongs = filtered.filter(w => w !== currentWord).sort(() => 0.5 - Math.random()).slice(0, 3);
         imageOptions = [...wrongs, currentWord].sort(() => 0.5 - Math.random());
     }
 
     function prepareAudioOptions() {
-        const filtered = getFilteredWords();
+        const filtered = getFilteredWordsForOptions();
         const wrongs = filtered.filter(w => w !== currentWord).sort(() => 0.5 - Math.random()).slice(0, 3);
         audioOptions = [...wrongs, currentWord].sort(() => 0.5 - Math.random());
     }
@@ -506,7 +383,9 @@
         container.innerHTML = cats.map(cat => `
             <div class="chip ${cat === selectedCategory ? 'active' : ''}" onclick="selectCategory('${cat}')">${cat}</div>
         `).join('');
-        document.getElementById('category-title').innerText = `Тема: ${selectedCategory}`;
+        
+        let wordsLeft = currentWord ? wordQueue.length + 1 : wordQueue.length;
+        document.getElementById('category-title').innerText = `Тема: ${selectedCategory} (Осталось: ${wordsLeft})`;
     }
 
     function renderNavTabs() {
@@ -516,7 +395,8 @@
             { id: 'typing', label: 'Письмо' },
             { id: 'images', label: 'Картинки' },
             { id: 'audio', label: 'Слух' },
-            { id: 'grammar', label: 'Грамматика' }
+            { id: 'grammar', label: 'Грамматика' },
+            { id: 'sentences', label: '📜 Пазл фраз' }
         ];
         const container = document.getElementById('nav-tabs-container');
         container.innerHTML = tabs.map(tab => `
@@ -530,6 +410,47 @@
         const catWrapper = document.getElementById('categories-wrapper-box');
         const titleEl = document.getElementById('category-title');
 
+        if (currentMode === 'sentences') {
+            catWrapper.style.display = 'none';
+            titleEl.innerText = 'Соберите предложение (Пазл)';
+            let sentenceObj = userSentences[currentSentenceIndex];
+
+            let targetBorderColor = 'var(--outline)';
+            if (puzzleStatus === 'correct') targetBorderColor = 'var(--success)';
+            if (puzzleStatus === 'incorrect') targetBorderColor = 'var(--error)';
+
+            container.innerHTML = `
+                <div class="puzzle-box">
+                    <div style="font-size: 14px; color: var(--outline); text-align: center;">Переведите на румынский:</div>
+                    <div class="card" style="padding: 14px; margin-bottom: 4px;">
+                        <div style="font-size: 18px; font-weight: bold; color: var(--on-surface);">${sentenceObj.ru}</div>
+                    </div>
+
+                    <div style="font-size: 13px; font-weight: bold; align-self: flex-start; margin-top: 4px;">Ваша сборка:</div>
+                    <div class="puzzle-target-area" style="border-color: ${targetBorderColor};">
+                        ${puzzleTargetWords.length === 0 ? '<span style="color: var(--outline); font-size: 13px;">Нажимайте на слова снизу</span>' : ''}
+                        ${puzzleTargetWords.map(w => `
+                            <button class="puzzle-chip" style="${puzzleStatus === 'correct' ? 'background: var(--success); color: white; border-color: var(--success);' : ''}${puzzleStatus === 'incorrect' ? 'background: var(--error-container); color: var(--error); border-color: var(--error);' : ''}" onclick="deselectPuzzleWord(${w.id})">${w.text}</button>
+                        `).join('')}
+                    </div>
+
+                    <div style="font-size: 13px; font-weight: bold; align-self: flex-start; margin-top: 4px;">Доступные слова:</div>
+                    <div class="puzzle-source-area">
+                        ${puzzleSourceWords.map(w => `
+                            <button class="puzzle-chip" onclick="selectPuzzleWord(${w.id})">${w.text}</button>
+                        `).join('')}
+                    </div>
+
+                    ${puzzleStatus === 'correct' ? '<div style="color: var(--success); font-weight: bold; font-size: 15px; margin-top: 2px;">🎉 Отлично! Верно!</div>' : ''}
+                    ${puzzleStatus === 'incorrect' ? '<div style="color: var(--error); font-weight: bold; font-size: 14px; margin-top: 2px;">❌ Ошибка! Правильный ответ показан выше.</div>' : ''}
+
+                    <button class="btn" style="margin-top: 8px;" onclick="checkPuzzleResult()">Проверить</button>
+                    <button class="btn btn-outline" style="padding: 10px;" onclick="initPuzzleSentence()">🔄 Другое предложение</button>
+                </div>
+            `;
+            return;
+        }
+
         if (currentMode === 'grammar') {
             catWrapper.style.display = 'none';
             titleEl.innerText = 'Грамматика и глаголы';
@@ -542,7 +463,7 @@
                             <div style="font-size: 13px; color: var(--primary); font-weight: bold; margin-bottom: 4px;">Тренажер: ${currentVerbTask.verb}</div>
                             <div style="font-size: 18px; font-weight: bold; margin-bottom: 14px;">Выберите форму для:<br><span style="font-size: 22px; color: var(--primary);">${currentVerbTask.pronoun}</span></div>
                             
-                            <button class="audio-btn" style="font-size: 18px; margin-bottom: 12px;" onclick="speak('${currentVerbTask.form}')">🔊 Послушать правильный ответ</button>
+                            <button class="audio-btn" style="font-size: 18px; margin-bottom: 12px;" onclick="speak('${currentVerbTask.form}', 'ro')">🔊 Послушать правильный ответ</button>
 
                             <div class="options-container">
                                 ${verbTaskOptions.map(opt => `
@@ -564,12 +485,12 @@
                         <h3>1. Глагол a fi (быть)</h3>
                         <table class="grammar-table">
                             <tr><th>Местоимение</th><th>(+) Утверждение</th><th>(-) Отрицание</th></tr>
-                            <tr><td>Eu (Я)</td><td><b>sunt</b> <button class="audio-btn" onclick="speak('sunt')">🔊</button><br><small>[йеу сунт]</small></td><td><b>nu sunt</b><br><small>[йеу ну сунт]</small></td></tr>
-                            <tr><td>Tu (Ты)</td><td><b>ești</b> <button class="audio-btn" onclick="speak('ești')">🔊</button><br><small>[ту ешть]</small></td><td><b>nu ești</b><br><small>[ту ну ешть]</small></td></tr>
-                            <tr><td>El / Ea (Он/Она)</td><td><b>este</b> <button class="audio-btn" onclick="speak('este')">🔊</button><br><small>[йел / я йесте]</small></td><td><b>nu este</b><br><small>[йел / я ну йесте]</small></td></tr>
-                            <tr><td>Noi (Мы)</td><td><b>suntem</b> <button class="audio-btn" onclick="speak('suntem')">🔊</button><br><small>[ной сунтем]</small></td><td><b>nu suntem</b><br><small>[ной ну сунтем]</small></td></tr>
-                            <tr><td>Voi / Dvs. (Вы)</td><td><b>sunteți</b> <button class="audio-btn" onclick="speak('sunteți')">🔊</button><br><small>[вой сунтець]</small></td><td><b>nu sunteți</b><br><small>[вой ну сунтець]</small></td></tr>
-                            <tr><td>Ei / Ele (Они)</td><td><b>sunt</b> <button class="audio-btn" onclick="speak('sunt')">🔊</button><br><small>[йей / йеле сунт]</small></td><td><b>nu sunt</b><br><small>[йей / йеле ну сунт]</small></td></tr>
+                            <tr><td>Eu (Я)</td><td><b class="clickable-word" onclick="speak('sunt', 'ro')">sunt 🔊</b><small>[йеу сунт]</small></td><td><b>nu sunt</b></td></tr>
+                            <tr><td>Tu (Ты)</td><td><b class="clickable-word" onclick="speak('ești', 'ro')">ești 🔊</b><small>[ту ешть]</small></td><td><b>nu ești</b></td></tr>
+                            <tr><td>El / Ea (Он/Она)</td><td><b class="clickable-word" onclick="speak('este', 'ro')">este 🔊</b><small>[йел / я йесте]</small></td><td><b>nu este</b></td></tr>
+                            <tr><td>Noi (Мы)</td><td><b class="clickable-word" onclick="speak('suntem', 'ro')">suntem 🔊</b><small>[ной сунтем]</small></td><td><b>nu suntem</b></td></tr>
+                            <tr><td>Voi / Dvs. (Вы)</td><td><b class="clickable-word" onclick="speak('sunteți', 'ro')">sunteți 🔊</b><small>[вой сунтець]</small></td><td><b>nu sunteți</b></td></tr>
+                            <tr><td>Ei / Ele (Они)</td><td><b class="clickable-word" onclick="speak('sunt', 'ro')">sunt 🔊</b><small>[йей / йеле сунт]</small></td><td><b>nu sunt</b></td></tr>
                         </table>
                     </div>
 
@@ -578,12 +499,12 @@
                         <h3>2. Глагол a avea (иметь)</h3>
                         <table class="grammar-table">
                             <tr><th>Местоимение</th><th>Глагол</th><th>Перевод / Произношение</th></tr>
-                            <tr><td>Eu (Я)</td><td><b>am</b></td><td>У меня — [йеу ам] <button class="audio-btn" onclick="speak('am')">🔊</button></td></tr>
-                            <tr><td>Tu (Ты)</td><td><b>ai</b></td><td>У тебя — [ту ай] <button class="audio-btn" onclick="speak('ai')">🔊</button></td></tr>
-                            <tr><td>El / Ea (Он/Она)</td><td><b>are</b></td><td>У него/нее — [йел / я аре] <button class="audio-btn" onclick="speak('are')">🔊</button></td></tr>
-                            <tr><td>Noi (Мы)</td><td><b>avem</b></td><td>У нас — [ной авем] <button class="audio-btn" onclick="speak('avem')">🔊</button></td></tr>
-                            <tr><td>Voi / Dvs. (Вы)</td><td><b>aveți</b></td><td>У вас — [вой авець] <button class="audio-btn" onclick="speak('aveți')">🔊</button></td></tr>
-                            <tr><td>Ei / Ele (Они)</td><td><b>au</b></td><td>У них — [йей / йеле ау] <button class="audio-btn" onclick="speak('au')">🔊</button></td></tr>
+                            <tr><td>Eu (Я)</td><td><b class="clickable-word" onclick="speak('am', 'ro')">am 🔊</b></td><td>У меня — [йеу ам]</td></tr>
+                            <tr><td>Tu (Ты)</td><td><b class="clickable-word" onclick="speak('ai', 'ro')">ai 🔊</b></td><td>У тебя — [ту ай]</td></tr>
+                            <tr><td>El / Ea (Он/Она)</td><td><b class="clickable-word" onclick="speak('are', 'ro')">are 🔊</b></td><td>У него/нее — [йел / я аре]</td></tr>
+                            <tr><td>Noi (Мы)</td><td><b class="clickable-word" onclick="speak('avem', 'ro')">avem 🔊</b></td><td>У нас — [ной авем]</td></tr>
+                            <tr><td>Voi / Dvs. (Вы)</td><td><b class="clickable-word" onclick="speak('aveți', 'ro')">aveți 🔊</b></td><td>У вас — [вой авець]</td></tr>
+                            <tr><td>Ei / Ele (Они)</td><td><b class="clickable-word" onclick="speak('au', 'ro')">au 🔊</b></td><td>У них — [йей / йеле ау]</td></tr>
                         </table>
                     </div>
 
@@ -592,39 +513,27 @@
                         <h3>3. Глагол a cumpăra (покупать)</h3>
                         <table class="grammar-table">
                             <tr><th>Местоимение</th><th>Форма</th><th>Произношение</th></tr>
-                            <tr><td>Eu (Я)</td><td><b>cumpăr</b></td><td>[йеу кумпэр] <button class="audio-btn" onclick="speak('cumpăr')">🔊</button></td></tr>
-                            <tr><td>Tu (Ты)</td><td><b>cumperi</b></td><td>[ту кумперь] <button class="audio-btn" onclick="speak('cumperi')">🔊</button></td></tr>
-                            <tr><td>El / Ea (Он / Она)</td><td><b>cumpără</b></td><td>[йел / я кумпэрэ] <button class="audio-btn" onclick="speak('cumpără')">🔊</button></td></tr>
-                            <tr><td>Noi (Мы)</td><td><b>cumpărăm</b></td><td>[ной кумпэрэм] <button class="audio-btn" onclick="speak('cumpărăm')">🔊</button></td></tr>
-                            <tr><td>Voi / Dvs. (Вы)</td><td><b>cumpărați</b></td><td>[вой кумпэраць] <button class="audio-btn" onclick="speak('cumpэrați')">🔊</button></td></tr>
-                            <tr><td>Ei / Ele (Они)</td><td><b>cumpără</b></td><td>[йей / йеле кумпэрэ] <button class="audio-btn" onclick="speak('cumpără')">🔊</button></td></tr>
+                            <tr><td>Eu (Я)</td><td><b class="clickable-word" onclick="speak('cumpăr', 'ro')">cumpăr 🔊</b></td><td>[йеу кумпэр]</td></tr>
+                            <tr><td>Tu (Ты)</td><td><b class="clickable-word" onclick="speak('cumperi', 'ro')">cumperi 🔊</b></td><td>[ту кумперь]</td></tr>
+                            <tr><td>El / Ea (Он / Она)</td><td><b class="clickable-word" onclick="speak('cumpără', 'ro')">cumpără 🔊</b></td><td>[йел / я кумпэрэ]</td></tr>
+                            <tr><td>Noi (Мы)</td><td><b class="clickable-word" onclick="speak('cumpărăm', 'ro')">cumpărăm 🔊</b></td><td>[ной кумпэрэм]</td></tr>
+                            <tr><td>Voi / Dvs. (Вы)</td><td><b class="clickable-word" onclick="speak('cumpărați', 'ro')">cumpărați 🔊</b></td><td>[вой кумпэраць]</td></tr>
+                            <tr><td>Ei / Ele (Они)</td><td><b class="clickable-word" onclick="speak('cumpără', 'ro')">cumpără 🔊</b></td><td>[йей / йеле кумпэрэ]</td></tr>
                         </table>
-                        <div class="rule-note">
-                            <b>💡 Правила окончаний:</b><br>
-                            • <b>Tu</b> — на <b>-i</b> (*cumperi*)<br>
-                            • <b>Noi</b> — на <b>-m</b> (*cumpărăm*)<br>
-                            • <b>Voi / Dvs.</b> — на <b>-ți</b> (*cumpărați*)<br>
-                            • <b>Ei / Ele</b> — как Он/Она (*cumpără*)
-                        </div>
-                        <div style="margin-top: 8px; font-size: 12px; font-weight: bold; background: var(--primary-container); color: var(--on-primary-container); padding: 6px; border-radius: 8px; cursor: pointer;" onclick="speak('Tu cumperi brioși și nu cumperi corn')">
-                            🔊 Пример: <i>Tu cumperi brioși și nu cumperi corn</i>
-                        </div>
                     </div>
-
                 </div>
             `;
             return;
         }
 
         catWrapper.style.display = 'flex';
-        renderCategories();
+        renderCategories(); 
 
         if (currentMode === 'flashcards') {
             container.innerHTML = `
                 <div class="card" style="min-height: 240px;">
                     <div class="card-emoji-box">${currentWord.emoji}</div>
-                    <div class="card-ro">${currentWord.ro}</div>
-                    <button class="audio-btn" onclick="speak('${currentWord.ro}')">🔊 Послушать</button>
+                    <div class="card-ro clickable-word" onclick="speak('${currentWord.ro}', 'ro')">${currentWord.ro} <button class="audio-btn" style="pointer-events: none;">🔊</button></div>
                     <div class="card-ru" style="margin-top: 6px;">${currentWord.ru}</div>
                 </div>
                 <button class="btn" onclick="resetState(); render();">Следующее слово</button>
@@ -635,8 +544,8 @@
 
             container.innerHTML = `
                 <div style="font-size: 16px; margin-bottom: 4px;">Как переводится:</div>
-                <div style="font-size: 24px; font-weight: bold; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; justify-content: center; color: var(--primary);">
-                    ${currentWord.ro} <button class="audio-btn" style="font-size:18px;" onclick="speak('${currentWord.ro}')">🔊</button>
+                <div class="clickable-word" style="font-size: 24px; font-weight: bold; margin-bottom: 10px; color: var(--primary);" onclick="speak('${currentWord.ro}', 'ro')">
+                    ${currentWord.ro} <button class="audio-btn" style="pointer-events: none;">🔊</button>
                 </div>
                 ${hintHtml}
                 <button class="btn btn-outline" style="max-width: 480px; padding: 6px; font-size: 12px; margin-bottom: 10px;" onclick="showHint = !showHint; render();">${hintBtnText}</button>
@@ -657,21 +566,24 @@
                 <div style="font-size: 16px; margin-bottom: 4px;">Напишите на румынском:</div>
                 ${hintHtml}
                 <button class="btn btn-outline" style="max-width: 480px; padding: 6px; font-size: 12px; margin-bottom: 6px;" onclick="showTypingHint = !showTypingHint; render();">${showTypingHint ? 'Скрыть подсказку' : '💡 Подсказка'}</button>
-                <div style="font-size: 20px; font-weight: bold; margin-bottom: 8px; text-align: center;">${currentWord.ru}</div>
+                
+                <div class="clickable-word" style="font-size: 20px; font-weight: bold; margin-bottom: 8px; text-align: center;" onclick="speak('${currentWord.ru}', 'ru')">
+                    ${currentWord.ru} <button class="audio-btn" style="font-size:16px; pointer-events: none;">🔊</button>
+                </div>
+
                 <input type="text" id="type-input" value="${typedValue}" placeholder="Введите слово..." 
                     class="${typingAttempts === 1 ? 'error-input' : ''}"
                     oninput="typedValue = this.value;"
                     onkeydown="if(event.key === 'Enter') checkTyping();">
                 ${messageHtml}
                 <button class="btn" onclick="checkTyping()">${typingAttempts === 1 ? 'Далее' : 'Проверить'}</button>
-                <button class="btn btn-outline" style="margin-top: 2px;" onclick="speak('${currentWord.ro}')">🔊 Послушать носителя</button>
             `;
             setTimeout(() => document.getElementById('type-input')?.focus(), 50);
         } else if (currentMode === 'images') {
             container.innerHTML = `
                 <div style="font-size: 16px; margin-bottom: 8px; text-align: center;">Найдите картинку для слова:</div>
-                <div style="font-size: 24px; font-weight: bold; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; justify-content: center; color: var(--primary);">
-                    ${currentWord.ro} <button class="audio-btn" style="font-size:20px;" onclick="speak('${currentWord.ro}')">🔊</button>
+                <div class="clickable-word" style="font-size: 24px; font-weight: bold; margin-bottom: 12px; color: var(--primary);" onclick="speak('${currentWord.ro}', 'ro')">
+                    ${currentWord.ro} <button class="audio-btn" style="pointer-events: none;">🔊</button>
                 </div>
                 <div class="grid-options">
                     ${imageOptions.map(opt => `
@@ -685,7 +597,7 @@
         } else if (currentMode === 'audio') {
             container.innerHTML = `
                 <div style="font-size: 16px; margin-bottom: 10px; text-align: center;">Что вы услышали?</div>
-                <div class="card" style="min-height: 120px; padding: 16px; margin-bottom: 12px; cursor: pointer;" onclick="speak('${currentWord.ro}')">
+                <div class="card" style="min-height: 120px; padding: 16px; margin-bottom: 12px; cursor: pointer;" onclick="speak('${currentWord.ro}', 'ro')">
                     <div style="font-size: 42px; margin-bottom: 4px;">🎧</div>
                     <div style="font-size: 14px; font-weight: bold; color: var(--primary);">Нажмите, чтобы послушать</div>
                 </div>
@@ -701,12 +613,14 @@
     function checkQuiz(buttonElement, selectedRu) {
         if (quizAnswered) return;
         quizAnswered = true;
+        let isCorrect = (selectedRu === currentWord.ru);
+        if (!isCorrect) requeueCurrentWord();
 
         const buttons = document.querySelectorAll('.quiz-btn');
         buttons.forEach(btn => {
             if (btn.getAttribute('data-ru') === currentWord.ru) {
                 btn.classList.add('correct');
-            } else if (btn === buttonElement && selectedRu !== currentWord.ru) {
+            } else if (btn === buttonElement && !isCorrect) {
                 btn.classList.add('incorrect');
             }
         });
@@ -720,13 +634,15 @@
     function checkImage(buttonElement, selectedRo) {
         if (imageAnswered) return;
         imageAnswered = true;
+        let isCorrect = (selectedRo === currentWord.ro);
+        if (!isCorrect) requeueCurrentWord();
 
         const buttons = document.querySelectorAll('.img-opt-btn');
         buttons.forEach(btn => {
             if (btn.getAttribute('data-ro') === currentWord.ro) {
                 btn.style.borderColor = 'var(--success)';
                 btn.style.backgroundColor = 'var(--success-container)';
-            } else if (btn === buttonElement && selectedRo !== currentWord.ro) {
+            } else if (btn === buttonElement && !isCorrect) {
                 btn.style.borderColor = 'var(--error)';
                 btn.style.backgroundColor = 'var(--error-container)';
             }
@@ -741,12 +657,14 @@
     function checkAudio(buttonElement, selectedRo) {
         if (audioAnswered) return;
         audioAnswered = true;
+        let isCorrect = (selectedRo === currentWord.ro);
+        if (!isCorrect) requeueCurrentWord();
 
         const buttons = document.querySelectorAll('.audio-opt-btn');
         buttons.forEach(btn => {
             if (btn.getAttribute('data-ro') === currentWord.ro) {
                 btn.classList.add('correct');
-            } else if (btn === buttonElement && selectedRo !== currentWord.ro) {
+            } else if (btn === buttonElement && !isCorrect) {
                 btn.classList.add('incorrect');
             }
         });
@@ -754,14 +672,12 @@
         setTimeout(() => {
             resetState();
             render();
-            if (currentMode === 'audio') {
-                setTimeout(() => speak(currentWord.ro), 300);
-            }
         }, 1200);
     }
 
     function checkTyping() {
         if (typingAttempts === 1) {
+            requeueCurrentWord();
             resetState();
             render();
             return;
@@ -777,6 +693,7 @@
         }
     }
 
+    initQueue();
     resetState();
     render();
 </script>

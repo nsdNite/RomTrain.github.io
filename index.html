@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Тренажер румынского языка</title>
+    <style>
+        :root {
+            --primary: #6750A4;
+            --primary-container: #EADDFF;
+            --on-primary-container: #21005D;
+            --background: #FEF7FF;
+            --surface: #FFFFFF;
+            --on-surface: #1D1B20;
+            --outline: #79747E;
+            --error: #B3261E;
+            --error-container: #F9DEDC;
+            --success: #146C2E;
+            --success-container: #D1E7DD;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--background);
+            color: var(--on-surface);
+            margin: 0;
+            padding: 12px 12px calc(70px + env(safe-area-inset-bottom)) 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        h2 { 
+            margin: 4px 0 10px 0; 
+            color: var(--primary); 
+            text-align: center; 
+            font-size: 18px; 
+        }
+
+        .categories-wrapper {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            max-width: 480px;
+            margin-bottom: 12px;
+            position: relative;
+        }
+
+        .categories {
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            width: 100%;
+            padding-bottom: 2px;
+            scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
+        }
+        .categories::-webkit-scrollbar { display: none; }
+
+        .chip {
+            background: var(--surface);
+            border: 1px solid var(--outline);
+            padding: 6px 14px;
+            border-radius: 18px;
+            cursor: pointer;
+            white-space: nowrap;
+            font-size: 13px;
+            font-weight: 500;
+            flex-shrink: 0;
+        }
+
+        .chip.active {
+            background: var(--primary-container);
+            color: var(--on-primary-container);
+            border-color: transparent;
+            font-weight: bold;
+        }
+
+        .scroll-arrow {
+            background: var(--surface);
+            border: 1px solid var(--outline);
+            border-radius: 50%;
+            width: 26px;
+            height: 26px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 11px;
+            flex-shrink: 0;
+            margin: 0 2px;
+            z-index: 2;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        #app-content {
+            width: 100%;
+            max-width: 480px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+        }
+
+        .card {
+            background: var(--surface);
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 16px;
+            position: relative;
+            margin-bottom: 12px;
+        }
+
+        .card-emoji-box {
+            font-size: 64px;
+            margin-bottom: 10px;
+            background: #f8f5ff;
+            width: 88px;
+            height: 88px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            box-shadow: inset 0 2px 6px rgba(0,0,0,0.04);
+        }
+
+        .card-ro { font-size: 24px; font-weight: bold; color: var(--primary); margin-bottom: 4px; }
+        .card-ru { font-size: 16px; color: var(--on-surface); opacity: 0.85; }
+        
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 100%;
+            max-width: 480px;
+            padding: 13px;
+            border-radius: 14px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 8px;
+            text-align: center;
+            transition: background-color 0.2s;
+        }
+
+        .btn-outline {
+            background: var(--surface);
+            border: 1px solid var(--outline);
+            color: var(--on-surface);
+        }
+
+        .btn.correct {
+            background-color: var(--success) !important;
+            color: white !important;
+            border-color: var(--success) !important;
+        }
+
+        .btn.incorrect {
+            background-color: var(--error) !important;
+            color: white !important;
+            border-color: var(--error) !important;
+        }
+
+        .options-container {
+            width: 100%;
+            max-width: 480px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .grid-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            width: 100%;
+            max-width: 480px;
+            margin-bottom: 12px;
+        }
+
+        .grid-btn {
+            background: var(--surface);
+            border: 2px solid var(--outline);
+            border-radius: 16px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .grid-emoji {
+            font-size: 38px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 4px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            max-width: 480px;
+            padding: 13px;
+            border: 1px solid var(--outline);
+            border-radius: 12px;
+            font-size: 16px;
+            margin-bottom: 10px;
+            outline: none;
+            background: var(--surface);
+            color: var(--on-surface);
+        }
+
+        input[type="text"].error-input {
+            border-color: var(--error);
+            background-color: var(--error-container);
+        }
+
+        /* Нижняя панель навигации под мобильные устройства */
+        .nav-tabs {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--surface);
+            border-top: 1px solid #E0E0E0;
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 6px calc(8px + env(safe-area-inset-bottom)) 6px;
+            box-shadow: 0 -4px 10px rgba(0,0,0,0.05);
+            z-index: 100;
+        }
+
+        .nav-btn {
+            flex: 1;
+            padding: 8px 2px;
+            border-radius: 10px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 10px;
+            white-space: nowrap;
+            color: var(--outline);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            transition: all 0.2s;
+        }
+
+        .nav-btn.active {
+            background: var(--primary-container);
+            color: var(--on-primary-container);
+            font-weight: bold;
+        }
+
+        .audio-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            color: var(--primary);
+            margin-top: 2px;
+            padding: 4px;
+        }
+        
+        .message-box {
+            font-size: 14px;
+            margin-bottom: 10px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .error-msg { color: var(--error); }
+
+        /* Стили таблиц грамматики под моб. экраны */
+        .grammar-container {
+            width: 100%;
+            max-width: 480px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding-bottom: 10px;
+        }
+        .grammar-card {
+            background: var(--surface);
+            border-radius: 18px;
+            padding: 14px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        .grammar-card h3 {
+            margin: 0 0 8px 0;
+            font-size: 15px;
+            color: var(--primary);
+            border-bottom: 2px solid var(--primary-container);
+            padding-bottom: 4px;
+        }
+        .grammar-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+        .grammar-table th, .grammar-table td {
+            border: 1px solid #E0E0E0;
+            padding: 6px;
+            text-align: left;
+        }
+        .grammar-table th {
+            background: #F4EEF8;
+            color: var(--on-surface);
+        }
+        .rule-note {
+            font-size: 11px;
+            color: #555;
+            margin-top: 6px;
+            background: #fdfcff;
+            padding: 6px;
+            border-radius: 8px;
+            border-left: 3px solid var(--primary);
+        }
+    </style>
+</head>
+<body>
+
+    <h2 id="category-title">Тема: Все</h2>
+
+    <div class="categories-wrapper" id="categories-wrapper-box">
+        <button class="scroll-arrow" onclick="scrollCategories(-140)">❮</button>
+        <div class="categories" id="categories-container"></div>
+        <button class="scroll-arrow" onclick="scrollCategories(140)">❯</button>
+    </div>
+
+    <div id="app-content"></div>
+
+    <div class="nav-tabs" id="nav-tabs-container"></div>
+
+<script src="database.js"></script>
+
+<script>
+    let currentMode = 'flashcards';
+    let selectedCategory = 'Все';
+    let currentWord = null;
+    
+    let quizOptions = [];
+    let quizAnswered = false;
+    let showHint = false;
+    
+    let imageOptions = [];
+    let imageAnswered = false;
+
+    let audioOptions = [];
+    let audioAnswered = false;
+
+    let typedValue = '';
+    let typingAttempts = 0;
+    let showTypingHint = false;
+
+    let verbQuizActive = false;
+    let currentVerbTask = null;
+    let verbTaskOptions = [];
+    let verbAnswered = false;
+
+    function getFilteredWords() {
+        return selectedCategory === 'Все' ? words : words.filter(w => w.cat === selectedCategory);
+    }
+
+    function getRandomWord() {
+        const list = getFilteredWords();
+        let nextWord;
+        do {
+            nextWord = list[Math.floor(Math.random() * list.length)];
+        } while (list.length > 1 && nextWord === currentWord);
+        return nextWord;
+    }
+
+    function scrollCategories(offset) {
+        document.getElementById('categories-container').scrollBy({ left: offset, behavior: 'smooth' });
+    }
+
+    function speak(text) {
+        try {
+            const audioUrl = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(text)}&tl=ro&client=tw-ob`;
+            const audio = new Audio(audioUrl);
+            audio.play().catch(() => {
+                if ('speechSynthesis' in window) {
+                    window.speechSynthesis.cancel();
+                    const utterance = new SpeechSynthesisUtterance(text);
+                    utterance.lang = 'ro-RO';
+                    window.speechSynthesis.speak(utterance);
+                }
+            });
+        } catch (e) {
+            console.log("Audio play error", e);
+        }
+    }
+
+    function setMode(mode) {
+        currentMode = mode;
+        verbQuizActive = false;
+        resetState();
+        render();
+        if (mode === 'audio') {
+            setTimeout(() => speak(currentWord.ro), 300);
+        }
+    }
+
+    function selectCategory(cat) {
+        selectedCategory = cat;
+        resetState();
+        render();
+        if (currentMode === 'audio') {
+            setTimeout(() => speak(currentWord.ro), 300);
+        }
+    }
+
+    function resetState() {
+        typedValue = '';
+        typingAttempts = 0;
+        quizAnswered = false;
+        showHint = false;
+        showTypingHint = false;
+        imageAnswered = false;
+        audioAnswered = false;
+        verbAnswered = false;
+        if (currentMode !== 'grammar') {
+            currentWord = getRandomWord();
+            prepareQuizOptions();
+            prepareImageOptions();
+            prepareAudioOptions();
+        } else if (verbQuizActive) {
+            prepareVerbTask();
+        }
+    }
+
+    function prepareVerbTask() {
+        currentVerbTask = verbConjugations[Math.floor(Math.random() * verbConjugations.length)];
+        verbTaskOptions = [...new Set(currentVerbTask.options)].sort(() => 0.5 - Math.random());
+    }
+
+    function startVerbTrainer() {
+        verbQuizActive = true;
+        prepareVerbTask();
+        render();
+    }
+
+    function checkVerbAnswer(btn, selectedForm) {
+        if (verbAnswered) return;
+        verbAnswered = true;
+
+        const buttons = document.querySelectorAll('.verb-btn');
+        buttons.forEach(b => {
+            if (b.getAttribute('data-form') === currentVerbTask.form) {
+                b.classList.add('correct');
+            } else if (b === btn && selectedForm !== currentVerbTask.form) {
+                b.classList.add('incorrect');
+            }
+        });
+
+        setTimeout(() => {
+            verbAnswered = false;
+            prepareVerbTask();
+            render();
+        }, 1200);
+    }
+
+    function prepareQuizOptions() {
+        const filtered = getFilteredWords();
+        const wrongs = filtered.filter(w => w !== currentWord).sort(() => 0.5 - Math.random()).slice(0, 3);
+        quizOptions = [...wrongs, currentWord].sort(() => 0.5 - Math.random());
+    }
+
+    function prepareImageOptions() {
+        const filtered = getFilteredWords();
+        const wrongs = filtered.filter(w => w !== currentWord).sort(() => 0.5 - Math.random()).slice(0, 3);
+        imageOptions = [...wrongs, currentWord].sort(() => 0.5 - Math.random());
+    }
+
+    function prepareAudioOptions() {
+        const filtered = getFilteredWords();
+        const wrongs = filtered.filter(w => w !== currentWord).sort(() => 0.5 - Math.random()).slice(0, 3);
+        audioOptions = [...wrongs, currentWord].sort(() => 0.5 - Math.random());
+    }
+
+    function renderCategories() {
+        const cats = ['Все', ...new Set(words.map(w => w.cat))];
+        const container = document.getElementById('categories-container');
+        container.innerHTML = cats.map(cat => `
+            <div class="chip ${cat === selectedCategory ? 'active' : ''}" onclick="selectCategory('${cat}')">${cat}</div>
+        `).join('');
+        document.getElementById('category-title').innerText = `Тема: ${selectedCategory}`;
+    }
+
+    function renderNavTabs() {
+        const tabs = [
+            { id: 'flashcards', label: 'Карточки' },
+            { id: 'quiz', label: 'Тест' },
+            { id: 'typing', label: 'Письмо' },
+            { id: 'images', label: 'Картинки' },
+            { id: 'audio', label: 'Слух' },
+            { id: 'grammar', label: 'Грамматика' }
+        ];
+        const container = document.getElementById('nav-tabs-container');
+        container.innerHTML = tabs.map(tab => `
+            <button class="nav-btn ${tab.id === currentMode ? 'active' : ''}" onclick="setMode('${tab.id}')">${tab.label}</button>
+        `).join('');
+    }
+
+    function render() {
+        renderNavTabs();
+        const container = document.getElementById('app-content');
+        const catWrapper = document.getElementById('categories-wrapper-box');
+        const titleEl = document.getElementById('category-title');
+
+        if (currentMode === 'grammar') {
+            catWrapper.style.display = 'none';
+            titleEl.innerText = 'Грамматика и глаголы';
+
+            if (verbQuizActive) {
+                container.innerHTML = `
+                    <div class="grammar-container">
+                        <div class="grammar-card" style="text-align: center; padding: 20px;">
+                            <button class="btn btn-outline" style="margin-bottom: 12px; padding: 8px; font-size: 13px;" onclick="verbQuizActive = false; render();">⬅️ Назад к таблицам</button>
+                            <div style="font-size: 13px; color: var(--primary); font-weight: bold; margin-bottom: 4px;">Тренажер: ${currentVerbTask.verb}</div>
+                            <div style="font-size: 18px; font-weight: bold; margin-bottom: 14px;">Выберите форму для:<br><span style="font-size: 22px; color: var(--primary);">${currentVerbTask.pronoun}</span></div>
+                            
+                            <button class="audio-btn" style="font-size: 18px; margin-bottom: 12px;" onclick="speak('${currentVerbTask.form}')">🔊 Послушать правильный ответ</button>
+
+                            <div class="options-container">
+                                ${verbTaskOptions.map(opt => `
+                                    <button class="btn btn-outline verb-btn" data-form="${opt}" onclick="checkVerbAnswer(this, '${opt}')">${opt}</button>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = `
+                <div class="grammar-container">
+                    <button class="btn" style="background: var(--success); margin-bottom: 2px;" onclick="startVerbTrainer()">🎯 Тренажер спряжения глаголов</button>
+                    
+                    <!-- A FI -->
+                    <div class="grammar-card">
+                        <h3>1. Глагол a fi (быть)</h3>
+                        <table class="grammar-table">
+                            <tr><th>Местоимение</th><th>(+) Утверждение</th><th>(-) Отрицание</th></tr>
+                            <tr><td>Eu (Я)</td><td><b>sunt</b> <button class="audio-btn" onclick="speak('sunt')">🔊</button><br><small>[йеу сунт]</small></td><td><b>nu sunt</b><br><small>[йеу ну сунт]</small></td></tr>
+                            <tr><td>Tu (Ты)</td><td><b>ești</b> <button class="audio-btn" onclick="speak('ești')">🔊</button><br><small>[ту ешть]</small></td><td><b>nu ești</b><br><small>[ту ну ешть]</small></td></tr>
+                            <tr><td>El / Ea (Он/Она)</td><td><b>este</b> <button class="audio-btn" onclick="speak('este')">🔊</button><br><small>[йел / я йесте]</small></td><td><b>nu este</b><br><small>[йел / я ну йесте]</small></td></tr>
+                            <tr><td>Noi (Мы)</td><td><b>suntem</b> <button class="audio-btn" onclick="speak('suntem')">🔊</button><br><small>[ной сунтем]</small></td><td><b>nu suntem</b><br><small>[ной ну сунтем]</small></td></tr>
+                            <tr><td>Voi / Dvs. (Вы)</td><td><b>sunteți</b> <button class="audio-btn" onclick="speak('sunteți')">🔊</button><br><small>[вой сунтець]</small></td><td><b>nu sunteți</b><br><small>[вой ну сунтець]</small></td></tr>
+                            <tr><td>Ei / Ele (Они)</td><td><b>sunt</b> <button class="audio-btn" onclick="speak('sunt')">🔊</button><br><small>[йей / йеле сунт]</small></td><td><b>nu sunt</b><br><small>[йей / йеле ну сунт]</small></td></tr>
+                        </table>
+                    </div>
+
+                    <!-- A AVEA -->
+                    <div class="grammar-card">
+                        <h3>2. Глагол a avea (иметь)</h3>
+                        <table class="grammar-table">
+                            <tr><th>Местоимение</th><th>Глагол</th><th>Перевод / Произношение</th></tr>
+                            <tr><td>Eu (Я)</td><td><b>am</b></td><td>У меня — [йеу ам] <button class="audio-btn" onclick="speak('am')">🔊</button></td></tr>
+                            <tr><td>Tu (Ты)</td><td><b>ai</b></td><td>У тебя — [ту ай] <button class="audio-btn" onclick="speak('ai')">🔊</button></td></tr>
+                            <tr><td>El / Ea (Он/Она)</td><td><b>are</b></td><td>У него/нее — [йел / я аре] <button class="audio-btn" onclick="speak('are')">🔊</button></td></tr>
+                            <tr><td>Noi (Мы)</td><td><b>avem</b></td><td>У нас — [ной авем] <button class="audio-btn" onclick="speak('avem')">🔊</button></td></tr>
+                            <tr><td>Voi / Dvs. (Вы)</td><td><b>aveți</b></td><td>У вас — [вой авець] <button class="audio-btn" onclick="speak('aveți')">🔊</button></td></tr>
+                            <tr><td>Ei / Ele (Они)</td><td><b>au</b></td><td>У них — [йей / йеле ау] <button class="audio-btn" onclick="speak('au')">🔊</button></td></tr>
+                        </table>
+                    </div>
+
+                    <!-- A CUMPĂRA -->
+                    <div class="grammar-card">
+                        <h3>3. Глагол a cumpăra (покупать)</h3>
+                        <table class="grammar-table">
+                            <tr><th>Местоимение</th><th>Форма</th><th>Произношение</th></tr>
+                            <tr><td>Eu (Я)</td><td><b>cumpăr</b></td><td>[йеу кумпэр] <button class="audio-btn" onclick="speak('cumpăr')">🔊</button></td></tr>
+                            <tr><td>Tu (Ты)</td><td><b>cumperi</b></td><td>[ту кумперь] <button class="audio-btn" onclick="speak('cumperi')">🔊</button></td></tr>
+                            <tr><td>El / Ea (Он / Она)</td><td><b>cumpără</b></td><td>[йел / я кумпэрэ] <button class="audio-btn" onclick="speak('cumpără')">🔊</button></td></tr>
+                            <tr><td>Noi (Мы)</td><td><b>cumpărăm</b></td><td>[ной кумпэрэм] <button class="audio-btn" onclick="speak('cumpărăm')">🔊</button></td></tr>
+                            <tr><td>Voi / Dvs. (Вы)</td><td><b>cumpărați</b></td><td>[вой кумпэраць] <button class="audio-btn" onclick="speak('cumpэrați')">🔊</button></td></tr>
+                            <tr><td>Ei / Ele (Они)</td><td><b>cumpără</b></td><td>[йей / йеле кумпэрэ] <button class="audio-btn" onclick="speak('cumpără')">🔊</button></td></tr>
+                        </table>
+                        <div class="rule-note">
+                            <b>💡 Правила окончаний:</b><br>
+                            • <b>Tu</b> — на <b>-i</b> (*cumperi*)<br>
+                            • <b>Noi</b> — на <b>-m</b> (*cumpărăm*)<br>
+                            • <b>Voi / Dvs.</b> — на <b>-ți</b> (*cumpărați*)<br>
+                            • <b>Ei / Ele</b> — как Он/Она (*cumpără*)
+                        </div>
+                        <div style="margin-top: 8px; font-size: 12px; font-weight: bold; background: var(--primary-container); color: var(--on-primary-container); padding: 6px; border-radius: 8px; cursor: pointer;" onclick="speak('Tu cumperi brioși și nu cumperi corn')">
+                            🔊 Пример: <i>Tu cumperi brioși și nu cumperi corn</i>
+                        </div>
+                    </div>
+
+                </div>
+            `;
+            return;
+        }
+
+        catWrapper.style.display = 'flex';
+        renderCategories();
+
+        if (currentMode === 'flashcards') {
+            container.innerHTML = `
+                <div class="card" style="min-height: 240px;">
+                    <div class="card-emoji-box">${currentWord.emoji}</div>
+                    <div class="card-ro">${currentWord.ro}</div>
+                    <button class="audio-btn" onclick="speak('${currentWord.ro}')">🔊 Послушать</button>
+                    <div class="card-ru" style="margin-top: 6px;">${currentWord.ru}</div>
+                </div>
+                <button class="btn" onclick="resetState(); render();">Следующее слово</button>
+            `;
+        } else if (currentMode === 'quiz') {
+            let hintHtml = showHint ? `<div style="font-size: 44px; margin-bottom: 6px;">${currentWord.emoji}</div>` : '';
+            let hintBtnText = showHint ? 'Скрыть подсказку' : '💡 Подсказка (картинка)';
+
+            container.innerHTML = `
+                <div style="font-size: 16px; margin-bottom: 4px;">Как переводится:</div>
+                <div style="font-size: 24px; font-weight: bold; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; justify-content: center; color: var(--primary);">
+                    ${currentWord.ro} <button class="audio-btn" style="font-size:18px;" onclick="speak('${currentWord.ro}')">🔊</button>
+                </div>
+                ${hintHtml}
+                <button class="btn btn-outline" style="max-width: 480px; padding: 6px; font-size: 12px; margin-bottom: 10px;" onclick="showHint = !showHint; render();">${hintBtnText}</button>
+                <div class="options-container">
+                    ${quizOptions.map(opt => `
+                        <button class="btn btn-outline quiz-btn" data-ru="${opt.ru}" onclick="checkQuiz(this, '${opt.ru}')">${opt.ru}</button>
+                    `).join('')}
+                </div>
+            `;
+        } else if (currentMode === 'typing') {
+            let messageHtml = '';
+            if (typingAttempts === 1) {
+                messageHtml = `<div class="message-box error-msg">Неправильно! Ответ: <b>${currentWord.ro}</b></div>`;
+            }
+            let hintHtml = showTypingHint ? `<div style="font-size: 40px; margin-bottom: 4px;">${currentWord.emoji}</div>` : '';
+
+            container.innerHTML = `
+                <div style="font-size: 16px; margin-bottom: 4px;">Напишите на румынском:</div>
+                ${hintHtml}
+                <button class="btn btn-outline" style="max-width: 480px; padding: 6px; font-size: 12px; margin-bottom: 6px;" onclick="showTypingHint = !showTypingHint; render();">${showTypingHint ? 'Скрыть подсказку' : '💡 Подсказка'}</button>
+                <div style="font-size: 20px; font-weight: bold; margin-bottom: 8px; text-align: center;">${currentWord.ru}</div>
+                <input type="text" id="type-input" value="${typedValue}" placeholder="Введите слово..." 
+                    class="${typingAttempts === 1 ? 'error-input' : ''}"
+                    oninput="typedValue = this.value;"
+                    onkeydown="if(event.key === 'Enter') checkTyping();">
+                ${messageHtml}
+                <button class="btn" onclick="checkTyping()">${typingAttempts === 1 ? 'Далее' : 'Проверить'}</button>
+                <button class="btn btn-outline" style="margin-top: 2px;" onclick="speak('${currentWord.ro}')">🔊 Послушать носителя</button>
+            `;
+            setTimeout(() => document.getElementById('type-input')?.focus(), 50);
+        } else if (currentMode === 'images') {
+            container.innerHTML = `
+                <div style="font-size: 16px; margin-bottom: 8px; text-align: center;">Найдите картинку для слова:</div>
+                <div style="font-size: 24px; font-weight: bold; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; justify-content: center; color: var(--primary);">
+                    ${currentWord.ro} <button class="audio-btn" style="font-size:20px;" onclick="speak('${currentWord.ro}')">🔊</button>
+                </div>
+                <div class="grid-options">
+                    ${imageOptions.map(opt => `
+                        <button class="grid-btn img-opt-btn" data-ro="${opt.ro}" onclick="checkImage(this, '${opt.ro}')">
+                            <div class="grid-emoji">${opt.emoji}</div>
+                            <span>${opt.ru}</span>
+                        </button>
+                    `).join('')}
+                </div>
+            `;
+        } else if (currentMode === 'audio') {
+            container.innerHTML = `
+                <div style="font-size: 16px; margin-bottom: 10px; text-align: center;">Что вы услышали?</div>
+                <div class="card" style="min-height: 120px; padding: 16px; margin-bottom: 12px; cursor: pointer;" onclick="speak('${currentWord.ro}')">
+                    <div style="font-size: 42px; margin-bottom: 4px;">🎧</div>
+                    <div style="font-size: 14px; font-weight: bold; color: var(--primary);">Нажмите, чтобы послушать</div>
+                </div>
+                <div class="options-container">
+                    ${audioOptions.map(opt => `
+                        <button class="btn btn-outline audio-opt-btn" data-ro="${opt.ro}" onclick="checkAudio(this, '${opt.ro}')">${opt.ru} (${opt.ro})</button>
+                    `).join('')}
+                </div>
+            `;
+        }
+    }
+
+    function checkQuiz(buttonElement, selectedRu) {
+        if (quizAnswered) return;
+        quizAnswered = true;
+
+        const buttons = document.querySelectorAll('.quiz-btn');
+        buttons.forEach(btn => {
+            if (btn.getAttribute('data-ru') === currentWord.ru) {
+                btn.classList.add('correct');
+            } else if (btn === buttonElement && selectedRu !== currentWord.ru) {
+                btn.classList.add('incorrect');
+            }
+        });
+
+        setTimeout(() => {
+            resetState();
+            render();
+        }, 1200);
+    }
+
+    function checkImage(buttonElement, selectedRo) {
+        if (imageAnswered) return;
+        imageAnswered = true;
+
+        const buttons = document.querySelectorAll('.img-opt-btn');
+        buttons.forEach(btn => {
+            if (btn.getAttribute('data-ro') === currentWord.ro) {
+                btn.style.borderColor = 'var(--success)';
+                btn.style.backgroundColor = 'var(--success-container)';
+            } else if (btn === buttonElement && selectedRo !== currentWord.ro) {
+                btn.style.borderColor = 'var(--error)';
+                btn.style.backgroundColor = 'var(--error-container)';
+            }
+        });
+
+        setTimeout(() => {
+            resetState();
+            render();
+        }, 1200);
+    }
+
+    function checkAudio(buttonElement, selectedRo) {
+        if (audioAnswered) return;
+        audioAnswered = true;
+
+        const buttons = document.querySelectorAll('.audio-opt-btn');
+        buttons.forEach(btn => {
+            if (btn.getAttribute('data-ro') === currentWord.ro) {
+                btn.classList.add('correct');
+            } else if (btn === buttonElement && selectedRo !== currentWord.ro) {
+                btn.classList.add('incorrect');
+            }
+        });
+
+        setTimeout(() => {
+            resetState();
+            render();
+            if (currentMode === 'audio') {
+                setTimeout(() => speak(currentWord.ro), 300);
+            }
+        }, 1200);
+    }
+
+    function checkTyping() {
+        if (typingAttempts === 1) {
+            resetState();
+            render();
+            return;
+        }
+
+        if (typedValue.trim().toLowerCase() === currentWord.ro.toLowerCase()) {
+            typedValue = '';
+            resetState();
+            render();
+        } else {
+            typingAttempts = 1;
+            render();
+        }
+    }
+
+    resetState();
+    render();
+</script>
+
+</body>
+</html>

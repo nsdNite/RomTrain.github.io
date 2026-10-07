@@ -237,6 +237,7 @@
         puzzleStatus = null;
         puzzleTargetWords = [];
         let sentenceObj = userSentences[currentSentenceIndex];
+        // Убираем точки и запятые для чистоты слов
         let cleanRo = sentenceObj.ro.replace(/[,.]/g, '');
         let wordsArr = cleanRo.split(/\s+/);
         puzzleSourceWords = wordsArr.map((word, idx) => ({ id: idx, text: word })).sort(() => 0.5 - Math.random());
@@ -269,26 +270,21 @@
         if (puzzleStatus === 'incorrect' || puzzleStatus === 'correct') return;
 
         let sentenceObj = userSentences[currentSentenceIndex];
-        let cleanRo = sentenceObj.ro.replace(/[,.]/g, '');
+        let cleanRo = sentenceObj.ro.toLowerCase().replace(/[,.]/g, '').trim();
         let originalWords = cleanRo.split(/\s+/);
 
-        let userString = puzzleTargetWords.map(w => w.text).join(' ');
-        if (userString === originalWords.join(' ')) {
+        let userString = puzzleTargetWords.map(w => w.text.toLowerCase().trim()).join(' ');
+        let correctString = originalWords.join(' ');
+
+        if (userString === correctString) {
             puzzleStatus = 'correct';
             speak(sentenceObj.ro, 'ro');
             render();
-            setTimeout(() => {
-                initPuzzleSentence();
-            }, 1600);
+            // Автоматический переход убран — переход только по кнопке
         } else {
             puzzleStatus = 'incorrect';
-            // Сразу подсвечиваем ошибку и выставляем правильный порядок слов вверху
-            puzzleTargetWords = originalWords.map((w, idx) => ({ id: 100 + idx, text: w }));
-            puzzleSourceWords = [];
             render();
-            setTimeout(() => {
-                initPuzzleSentence();
-            }, 2500);
+            // Автоматический переход убран — переход только по кнопке
         }
     }
 
@@ -410,7 +406,7 @@
         const catWrapper = document.getElementById('categories-wrapper-box');
         const titleEl = document.getElementById('category-title');
 
-        if (currentMode === 'sentences') {
+       if (currentMode === 'sentences') {
             catWrapper.style.display = 'none';
             titleEl.innerText = 'Соберите предложение (Пазл)';
             let sentenceObj = userSentences[currentSentenceIndex];
@@ -442,7 +438,14 @@
                     </div>
 
                     ${puzzleStatus === 'correct' ? '<div style="color: var(--success); font-weight: bold; font-size: 15px; margin-top: 2px;">🎉 Отлично! Верно!</div>' : ''}
-                    ${puzzleStatus === 'incorrect' ? '<div style="color: var(--error); font-weight: bold; font-size: 14px; margin-top: 2px;">❌ Ошибка! Правильный ответ показан выше.</div>' : ''}
+                    
+                    ${puzzleStatus === 'incorrect' ? `
+                        <div style="background: var(--error-container); color: var(--error); padding: 10px; border-radius: 12px; width: 100%; text-align: center; margin-top: 4px;">
+                            <div style="font-weight: bold; font-size: 14px; margin-bottom: 2px;">❌ Ошибка!</div>
+                            <div style="font-size: 13px;">Правильный ответ:</div>
+                            <div style="font-weight: bold; font-size: 15px; margin-top: 2px;">${sentenceObj.ro}</div>
+                        </div>
+                    ` : ''}
 
                     <button class="btn" style="margin-top: 8px;" onclick="checkPuzzleResult()">Проверить</button>
                     <button class="btn btn-outline" style="padding: 10px;" onclick="initPuzzleSentence()">🔄 Другое предложение</button>
@@ -484,13 +487,13 @@
                     <div class="grammar-card">
                         <h3>1. Глагол a fi (быть)</h3>
                         <table class="grammar-table">
-                            <tr><th>Местоимение</th><th>(+) Утверждение</th><th>(-) Отрицание</th></tr>
-                            <tr><td>Eu (Я)</td><td><b class="clickable-word" onclick="speak('sunt', 'ro')">sunt 🔊</b><small>[йеу сунт]</small></td><td><b>nu sunt</b></td></tr>
-                            <tr><td>Tu (Ты)</td><td><b class="clickable-word" onclick="speak('ești', 'ro')">ești 🔊</b><small>[ту ешть]</small></td><td><b>nu ești</b></td></tr>
-                            <tr><td>El / Ea (Он/Она)</td><td><b class="clickable-word" onclick="speak('este', 'ro')">este 🔊</b><small>[йел / я йесте]</small></td><td><b>nu este</b></td></tr>
-                            <tr><td>Noi (Мы)</td><td><b class="clickable-word" onclick="speak('suntem', 'ro')">suntem 🔊</b><small>[ной сунтем]</small></td><td><b>nu suntem</b></td></tr>
-                            <tr><td>Voi / Dvs. (Вы)</td><td><b class="clickable-word" onclick="speak('sunteți', 'ro')">sunteți 🔊</b><small>[вой сунтець]</small></td><td><b>nu sunteți</b></td></tr>
-                            <tr><td>Ei / Ele (Они)</td><td><b class="clickable-word" onclick="speak('sunt', 'ro')">sunt 🔊</b><small>[йей / йеле сунт]</small></td><td><b>nu sunt</b></td></tr>
+                            <tr><th>Местоимение</th><th>Форма</th><th>Перевод</th></tr>
+                            <tr><td>Eu </td><td><b class="clickable-word" onclick="speak('sunt', 'ro')">sunt 🔊</b></td><td>я есть</td></tr>
+                            <tr><td>Tu </td><td><b class="clickable-word" onclick="speak('ești', 'ro')">ești 🔊</b></td><td>ты есть</td></tr>
+                            <tr><td>El / Ea </td><td><b class="clickable-word" onclick="speak('este', 'ro')">este 🔊</b></td><td>он / она есть</td></tr>
+                            <tr><td>Noi </td><td><b class="clickable-word" onclick="speak('suntem', 'ro')">suntem 🔊</b></td><td>мы есть</td></tr>
+                            <tr><td>Voi / Dvs. </td><td><b class="clickable-word" onclick="speak('sunteți', 'ro')">sunteți 🔊</b></td><td>вы есть</td></tr>
+                            <tr><td>Ei / Ele </td><td><b class="clickable-word" onclick="speak('sunt', 'ro')">sunt 🔊</b></td><td>они есть</td></tr>
                         </table>
                     </div>
 
@@ -498,13 +501,13 @@
                     <div class="grammar-card">
                         <h3>2. Глагол a avea (иметь)</h3>
                         <table class="grammar-table">
-                            <tr><th>Местоимение</th><th>Глагол</th><th>Перевод / Произношение</th></tr>
-                            <tr><td>Eu (Я)</td><td><b class="clickable-word" onclick="speak('am', 'ro')">am 🔊</b></td><td>У меня — [йеу ам]</td></tr>
-                            <tr><td>Tu (Ты)</td><td><b class="clickable-word" onclick="speak('ai', 'ro')">ai 🔊</b></td><td>У тебя — [ту ай]</td></tr>
-                            <tr><td>El / Ea (Он/Она)</td><td><b class="clickable-word" onclick="speak('are', 'ro')">are 🔊</b></td><td>У него/нее — [йел / я аре]</td></tr>
-                            <tr><td>Noi (Мы)</td><td><b class="clickable-word" onclick="speak('avem', 'ro')">avem 🔊</b></td><td>У нас — [ной авем]</td></tr>
-                            <tr><td>Voi / Dvs. (Вы)</td><td><b class="clickable-word" onclick="speak('aveți', 'ro')">aveți 🔊</b></td><td>У вас — [вой авець]</td></tr>
-                            <tr><td>Ei / Ele (Они)</td><td><b class="clickable-word" onclick="speak('au', 'ro')">au 🔊</b></td><td>У них — [йей / йеле ау]</td></tr>
+                            <tr><th>Местоимение</th><th>Форма</th><th>Перевод</th></tr>
+                            <tr><td>Eu </td><td><b class="clickable-word" onclick="speak('am', 'ro')">am 🔊</b></td><td>у меня есть</td></tr>
+                            <tr><td>Tu </td><td><b class="clickable-word" onclick="speak('ai', 'ro')">ai 🔊</b></td><td>у тебя есть</td></tr>
+                            <tr><td>El / Ea </td><td><b class="clickable-word" onclick="speak('are', 'ro')">are 🔊</b></td><td>у него / у нее есть</td></tr>
+                            <tr><td>Noi </td><td><b class="clickable-word" onclick="speak('avem', 'ro')">avem 🔊</b></td><td>у нас есть</td></tr>
+                            <tr><td>Voi / Dvs. </td><td><b class="clickable-word" onclick="speak('aveți', 'ro')">aveți 🔊</b></td><td>у вас есть</td></tr>
+                            <tr><td>Ei / Ele </td><td><b class="clickable-word" onclick="speak('au', 'ro')">au 🔊</b></td><td>у них есть</td></tr>
                         </table>
                     </div>
 
@@ -512,13 +515,13 @@
                     <div class="grammar-card">
                         <h3>3. Глагол a cumpăra (покупать)</h3>
                         <table class="grammar-table">
-                            <tr><th>Местоимение</th><th>Форма</th><th>Произношение</th></tr>
-                            <tr><td>Eu (Я)</td><td><b class="clickable-word" onclick="speak('cumpăr', 'ro')">cumpăr 🔊</b></td><td>[йеу кумпэр]</td></tr>
-                            <tr><td>Tu (Ты)</td><td><b class="clickable-word" onclick="speak('cumperi', 'ro')">cumperi 🔊</b></td><td>[ту кумперь]</td></tr>
-                            <tr><td>El / Ea (Он / Она)</td><td><b class="clickable-word" onclick="speak('cumpără', 'ro')">cumpără 🔊</b></td><td>[йел / я кумпэрэ]</td></tr>
-                            <tr><td>Noi (Мы)</td><td><b class="clickable-word" onclick="speak('cumpărăm', 'ro')">cumpărăm 🔊</b></td><td>[ной кумпэрэм]</td></tr>
-                            <tr><td>Voi / Dvs. (Вы)</td><td><b class="clickable-word" onclick="speak('cumpărați', 'ro')">cumpărați 🔊</b></td><td>[вой кумпэраць]</td></tr>
-                            <tr><td>Ei / Ele (Они)</td><td><b class="clickable-word" onclick="speak('cumpără', 'ro')">cumpără 🔊</b></td><td>[йей / йеле кумпэрэ]</td></tr>
+                            <tr><th>Местоимение</th><th>Форма</th><th>Перевод</th></tr>
+                            <tr><td>Eu </td><td><b class="clickable-word" onclick="speak('cumpăr', 'ro')">cumpăr 🔊</b></td><td>я покупаю</td></tr>
+                            <tr><td>Tu </td><td><b class="clickable-word" onclick="speak('cumperi', 'ro')">cumperi 🔊</b></td><td>ты покупаешь</td></tr>
+                            <tr><td>El / Ea </td><td><b class="clickable-word" onclick="speak('cumpără', 'ro')">cumpără 🔊</b></td><td>он / она покупает</td></tr>
+                            <tr><td>Noi </td><td><b class="clickable-word" onclick="speak('cumpărăm', 'ro')">cumpărăm 🔊</b></td><td>мы покупаем</td></tr>
+                            <tr><td>Voi / Dvs. </td><td><b class="clickable-word" onclick="speak('cumpărați', 'ro')">cumpărați 🔊</b></td><td>вы покупаете</td></tr>
+                            <tr><td>Ei / Ele </td><td><b class="clickable-word" onclick="speak('cumpără', 'ro')">cumpără 🔊</b></td><td>они покупают</td></tr>
                         </table>
                     </div>
                 </div>
@@ -594,7 +597,7 @@
                     `).join('')}
                 </div>
             `;
-        } else if (currentMode === 'audio') {
+       } else if (currentMode === 'audio') {
             container.innerHTML = `
                 <div style="font-size: 16px; margin-bottom: 10px; text-align: center;">Что вы услышали?</div>
                 <div class="card" style="min-height: 120px; padding: 16px; margin-bottom: 12px; cursor: pointer;" onclick="speak('${currentWord.ro}', 'ro')">
@@ -603,7 +606,7 @@
                 </div>
                 <div class="options-container">
                     ${audioOptions.map(opt => `
-                        <button class="btn btn-outline audio-opt-btn" data-ro="${opt.ro}" onclick="checkAudio(this, '${opt.ro}')">${opt.ru} (${opt.ro})</button>
+                        <button class="btn btn-outline audio-opt-btn" data-ro="${opt.ro}" onclick="checkAudio(this, '${opt.ro}')">${opt.ru}</button>
                     `).join('')}
                 </div>
             `;
